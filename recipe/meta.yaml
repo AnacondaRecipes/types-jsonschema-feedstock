@@ -50,7 +50,7 @@ about:
     used by type-checking tools like mypy, pyright, pytype, PyCharm, etc. to
     check code that uses jsonschema.
   dev_url: https://github.com/python/typeshed
-  doc_url: https://json-schema.org/learn/getting-started-step-by-step
+  doc_url: https://python-jsonschema.readthedocs.io/en/stable/
 
 
 extra:
