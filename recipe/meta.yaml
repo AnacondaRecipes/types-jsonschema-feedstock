@@ -1,41 +1,57 @@
+{% set name = "types-jsonschema" %}
 {% set version = "4.19.0.4" %}
 
 package:
   name: types-jsonschema
   version: {{ version }}
 
+
 source:
-  - url: https://pypi.io/packages/source/t/types-jsonschema/types-jsonschema-{{ version }}.tar.gz
+  - url: https://pypi.io/packages/source/t/{{ name }}/{{ name }}-{{ version }}.tar.gz
     sha256: 994feb6632818259c4b5dbd733867824cb475029a6abc2c2b5201a2268b6e7d2
-  - url: https://raw.githubusercontent.com/python/typeshed/main/LICENSE
-    sha256: 295f8538c94ae5c3043301cf7cff1c852dab6a786a8ddee471e061b40d5ecabe
+
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<36]
+
 
 requirements:
   host:
-    - python >=3.7
     - pip
+    - python
+    - wheel
+    - setuptools
   run:
-    - python >=3.7
+    - python
     - referencing
 
+
 test:
+  imports:
+    - types
+  requires:
+    - pip
   commands:
     - pip check
     - test -f $SP_DIR/jsonschema-stubs/__init__.pyi                 # [unix]
     - if not exist %SP_DIR%\\jsonschema-stubs\\__init__.pyi exit 1  # [win]
-  requires:
-    - pip
+
 
 about:
   home: https://github.com/python/typeshed
-  summary: Typing stubs for jsonschema
-  license: Apache-2.0
+  license: Apache-2.0 AND MIT
   license_file: LICENSE
+  license_family: OTHER
+  summary: Typing stubs for jsonschema
+  description: |
+    This is a PEP 561 type stub package for the jsonschema package. It can be
+    used by type-checking tools like mypy, pyright, pytype, PyCharm, etc. to
+    check code that uses jsonschema.
+  dev_url: https://github.com/python/typeshed
+  doc_url: https://json-schema.org/learn/getting-started-step-by-step
+
 
 extra:
   recipe-maintainers:
