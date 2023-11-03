@@ -5,7 +5,7 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/types-jsonschem
 
 Home: https://github.com/python/typeshed
 
-Package license: Apache-2.0 AND MIT
+Package license: Apache-2.0
 
 Summary: Typing stubs for jsonschema
 
