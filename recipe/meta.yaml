@@ -1,32 +1,28 @@
 {% set name = "types-jsonschema" %}
-{% set version = "4.19.0.4" %}
+{% set version = "4.23.0.20250516" %}
 
 package:
   name: types-jsonschema
   version: {{ version }}
 
-
 source:
-  - url: https://pypi.io/packages/source/t/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 994feb6632818259c4b5dbd733867824cb475029a6abc2c2b5201a2268b6e7d2
-
+  - url: https://pypi.org/packages/source/t/{{ name }}/types_jsonschema-{{ version }}.tar.gz
+    sha256: 9ace09d9d35c4390a7251ccd7d833b92ccc189d24d1b347f26212afce361117e
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<38]
-
+  skip: true  # [py<39]
 
 requirements:
   host:
     - pip
     - python
     - wheel
-    - setuptools
+    - setuptools >=77.0.3
   run:
     - python
     - referencing
-
 
 test:
   imports:
@@ -35,9 +31,8 @@ test:
     - pip
   commands:
     - pip check
-    - test -f $SP_DIR/jsonschema-stubs/__init__.pyi                 # [unix]
+    - test -f $SP_DIR/jsonschema-stubs/__init__.pyi  # [unix]
     - if not exist %SP_DIR%\\jsonschema-stubs\\__init__.pyi exit 1  # [win]
-
 
 about:
   home: https://github.com/python/typeshed
@@ -51,7 +46,6 @@ about:
     check code that uses jsonschema.
   dev_url: https://github.com/python/typeshed
   doc_url: https://python-jsonschema.readthedocs.io/en/stable/
-
 
 extra:
   recipe-maintainers:
