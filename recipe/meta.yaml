@@ -1,43 +1,37 @@
 {% set name = "types-jsonschema" %}
-{% set version = "4.19.0.4" %}
+{% set version = "4.25.1.20251009" %}
 
 package:
-  name: types-jsonschema
+  name: {{ name }}
   version: {{ version }}
 
-
 source:
-  - url: https://pypi.io/packages/source/t/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 994feb6632818259c4b5dbd733867824cb475029a6abc2c2b5201a2268b6e7d2
-
+  - url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
+    sha256: 75d0f5c5dd18dc23b664437a0c1a625743e8d2e665ceaf3aecb29841f3a5f97f
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<38]
-
+  skip: true  # [py<39]
 
 requirements:
   host:
     - pip
     - python
-    - wheel
-    - setuptools
+    - setuptools >=77.0.3
   run:
     - python
     - referencing
 
-
 test:
   imports:
     - types
-  requires:
-    - pip
   commands:
     - pip check
     - test -f $SP_DIR/jsonschema-stubs/__init__.pyi                 # [unix]
     - if not exist %SP_DIR%\\jsonschema-stubs\\__init__.pyi exit 1  # [win]
-
+  requires:
+    - pip
 
 about:
   home: https://github.com/python/typeshed
@@ -50,8 +44,7 @@ about:
     used by type-checking tools like mypy, pyright, pytype, PyCharm, etc. to
     check code that uses jsonschema.
   dev_url: https://github.com/python/typeshed
-  doc_url: https://python-jsonschema.readthedocs.io/en/stable/
-
+  doc_url: https://python-jsonschema.readthedocs.io
 
 extra:
   recipe-maintainers:
